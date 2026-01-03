@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${categoria.id != null} ? 'Editar Categoria' : 'Nova Categoria'">Categoria</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="/css/admin.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/admin">
+                <i class="bi bi-gear"></i> Admin - Mascote Pet Shop
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin"><i class="bi bi-speedometer2"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/produtos"><i class="bi bi-box"></i> Produtos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/admin/categorias"><i class="bi bi-tags"></i> Categorias</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="bi bi-eye"></i> Ver Site</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/logout"><i class="bi bi-box-arrow-right"></i> Sair</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="bi bi-tags"></i>
+                            <span th:text="${categoria.id != null} ? 'Editar Categoria' : 'Nova Categoria'">Categoria</span>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/admin/categorias/salvar}" method="post">
+                            <input type="hidden" name="id" th:value="${categoria.id}">
+
+                            <div class="mb-3">
+                                <label for="nome" class="form-label">Nome *</label>
+                                <input type="text" class="form-control" id="nome" name="nome"
+                                       th:value="${categoria.nome}" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="ordem" class="form-label">Ordem de Exibição</label>
+                                <input type="number" class="form-control" id="ordem" name="ordem"
+                                       th:value="${categoria.ordem != null} ? ${categoria.ordem} : 0" min="0">
+                                <div class="form-text">Categorias com menor número aparecem primeiro</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="ativa" name="ativa"
+                                           th:checked="${categoria.ativa == null || categoria.ativa}" value="true">
+                                    <label class="form-check-label" for="ativa">Categoria ativa</label>
+                                </div>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-check"></i> Salvar
+                                </button>
+                                <a href="/admin/categorias" class="btn btn-secondary">
+                                    <i class="bi bi-x"></i> Cancelar
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

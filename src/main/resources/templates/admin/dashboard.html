@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Admin</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="/css/admin.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/admin">
+                <i class="bi bi-gear"></i> Admin - Mascote Pet Shop
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/admin"><i class="bi bi-speedometer2"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/produtos"><i class="bi bi-box"></i> Produtos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/categorias"><i class="bi bi-tags"></i> Categorias</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="bi bi-eye"></i> Ver Site</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/logout"><i class="bi bi-box-arrow-right"></i> Sair</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid py-4">
+        <h2 class="mb-4">Dashboard</h2>
+
+        <div class="row g-4 mb-4">
+            <div class="col-md-6">
+                <div class="card bg-primary text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="card-title">Total de Produtos</h6>
+                                <h2 class="mb-0" th:text="${#lists.size(produtos)}">0</h2>
+                            </div>
+                            <i class="bi bi-box display-4"></i>
+                        </div>
+                        <a href="/admin/produtos" class="text-white small">Ver todos <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card bg-success text-white">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="card-title">Total de Categorias</h6>
+                                <h2 class="mb-0" th:text="${#lists.size(categorias)}">0</h2>
+                            </div>
+                            <i class="bi bi-tags display-4"></i>
+                        </div>
+                        <a href="/admin/categorias" class="text-white small">Ver todas <i class="bi bi-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0"><i class="bi bi-box"></i> Últimos Produtos</h5>
+                        <a href="/admin/produtos/novo" class="btn btn-primary btn-sm">
+                            <i class="bi bi-plus"></i> Novo Produto
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Imagem</th>
+                                        <th>Nome</th>
+                                        <th>Categoria</th>
+                                        <th>Preço</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="produto, iter : ${produtos}" th:if="${iter.index < 5}">
+                                        <td>
+                                            <img th:if="${produto.imagemUrl != null}"
+                                                 th:src="${produto.imagemUrl}"
+                                                 alt="Imagem" class="img-thumbnail" style="width: 50px; height: 50px; object-fit: cover;">
+                                            <span th:unless="${produto.imagemUrl != null}" class="text-muted">
+                                                <i class="bi bi-image"></i>
+                                            </span>
+                                        </td>
+                                        <td th:text="${produto.nome}">Produto</td>
+                                        <td th:text="${produto.categoria.nome}">Categoria</td>
+                                        <td th:text="'R$ ' + ${#numbers.formatDecimal(produto.preco, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</td>
+                                        <td>
+                                            <span th:if="${produto.ativo}" class="badge bg-success">Ativo</span>
+                                            <span th:unless="${produto.ativo}" class="badge bg-secondary">Inativo</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

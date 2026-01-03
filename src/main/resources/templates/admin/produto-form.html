@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${produto.id != null} ? 'Editar Produto' : 'Novo Produto'">Produto</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="/css/admin.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/admin">
+                <i class="bi bi-gear"></i> Admin - Mascote Pet Shop
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin"><i class="bi bi-speedometer2"></i> Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/admin/produtos"><i class="bi bi-box"></i> Produtos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/categorias"><i class="bi bi-tags"></i> Categorias</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/"><i class="bi bi-eye"></i> Ver Site</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/admin/logout"><i class="bi bi-box-arrow-right"></i> Sair</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">
+                            <i class="bi bi-box"></i>
+                            <span th:text="${produto.id != null} ? 'Editar Produto' : 'Novo Produto'">Produto</span>
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/admin/produtos/salvar}" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="id" th:value="${produto.id}">
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="mb-3">
+                                        <label for="nome" class="form-label">Nome *</label>
+                                        <input type="text" class="form-control" id="nome" name="nome"
+                                               th:value="${produto.nome}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="preco" class="form-label">Preço *</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text">R$</span>
+                                            <input type="number" step="0.01" min="0" class="form-control" id="preco" name="preco"
+                                                   th:value="${produto.preco}" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="descricao" class="form-label">Descrição</label>
+                                <textarea class="form-control" id="descricao" name="descricao" rows="3"
+                                          th:text="${produto.descricao}"></textarea>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="categoriaId" class="form-label">Categoria *</label>
+                                        <select class="form-select" id="categoriaId" name="categoriaId" required>
+                                            <option value="">Selecione uma categoria</option>
+                                            <option th:each="cat : ${categorias}"
+                                                    th:value="${cat.id}"
+                                                    th:text="${cat.nome}"
+                                                    th:selected="${produto.categoria != null && produto.categoria.id == cat.id}">
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label class="form-label">Status</label>
+                                        <div class="form-check form-switch mt-2">
+                                            <input class="form-check-input" type="checkbox" id="ativo" name="ativo"
+                                                   th:checked="${produto.ativo == null || produto.ativo}" value="true">
+                                            <label class="form-check-label" for="ativo">Produto ativo</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="imagem" class="form-label">Imagem do Produto</label>
+                                <input type="file" class="form-control" id="imagem" name="imagem" accept="image/*">
+                                <div class="form-text">Formatos aceitos: JPG, PNG, GIF. Tamanho máximo: 10MB</div>
+                                <div th:if="${produto.imagemUrl != null}" class="mt-2">
+                                    <p class="text-muted mb-1">Imagem atual:</p>
+                                    <img th:src="${produto.imagemUrl}" alt="Imagem atual"
+                                         class="img-thumbnail" style="max-width: 200px;">
+                                </div>
+                            </div>
+
+                            <div class="d-flex gap-2">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-check"></i> Salvar
+                                </button>
+                                <a href="/admin/produtos" class="btn btn-secondary">
+                                    <i class="bi bi-x"></i> Cancelar
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

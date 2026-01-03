@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mvn spring-boot:run:*)",
+      "Bash(cmd.exe /c \"cd /d C:\\\\Users\\\\bruno\\\\Downloads\\\\PETSHOPHEITOR && mvn spring-boot:run\")",
+      "Bash(cat:*)",
+      "Bash(cmd.exe /c \"echo JAVA_HOME=%JAVA_HOME% && java -version 2>&1\")",
+      "Bash(powershell.exe -Command \"java -version\")",
+      "Bash(powershell.exe -Command \"cd ''C:\\\\Users\\\\bruno\\\\Downloads\\\\PETSHOPHEITOR''; .\\\\mvnw.cmd spring-boot:run\")",
+      "Bash(powershell.exe -Command \"\\(Get-Command java\\).Source\")",
+      "Bash(powershell.exe -Command:*)",
+      "Bash(cmd.exe:*)",
+      "Bash(ls:*)",
+      "Bash(taskkill:*)"
+    ]
+  }
+}
