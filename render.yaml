@@ -12,7 +12,23 @@ services:
         value: 8080
       - key: SPRING_PROFILES_ACTIVE
         value: prod
-      - key: DATABASE_URL
+      - key: DB_HOST
         fromDatabase:
           name: mascote-petshop-db
-          property: jdbcDatabaseUrl
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: mascote-petshop-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: mascote-petshop-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: mascote-petshop-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: mascote-petshop-db
+          property: password
