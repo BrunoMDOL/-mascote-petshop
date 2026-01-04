@@ -27,13 +27,14 @@
                                 <p class="card-text small text-muted flex-grow-1" th:text="${produto.descricao}">Descrição</p>
                                 <div class="mt-auto">
                                     <p class="h5 text-primary mb-2" th:text="${#numbers.formatDecimal(produto.preco, 1, 'POINT', 2, 'COMMA')}">0,00</p>
-                                    <button class="btn btn-primary btn-sm w-100"
+                                    <button class="btn-adicionar"
                                             th:data-id="${produto.id}"
                                             th:data-nome="${produto.nome}"
                                             th:data-preco="${produto.preco}"
                                             th:data-imagem="${produto.imagemUrl}"
                                             onclick="adicionarAoCarrinho(this)">
-                                        <i class="bi bi-cart-plus"></i> Adicionar
+                                        <i class="bi bi-bag-plus"></i>
+                                        <span>Adicionar</span>
                                     </button>
                                 </div>
                             </div>
@@ -70,13 +71,14 @@
                                         <p class="h5 text-primary mb-2">
                                             R$ <span th:text="${#numbers.formatDecimal(produto.preco, 1, 'POINT', 2, 'COMMA')}">0,00</span>
                                         </p>
-                                        <button class="btn btn-primary btn-sm w-100"
+                                        <button class="btn-adicionar"
                                                 th:data-id="${produto.id}"
                                                 th:data-nome="${produto.nome}"
                                                 th:data-preco="${produto.preco}"
                                                 th:data-imagem="${produto.imagemUrl}"
                                                 onclick="adicionarAoCarrinho(this)">
-                                            <i class="bi bi-cart-plus"></i> Adicionar
+                                            <i class="bi bi-bag-plus"></i>
+                                            <span>Adicionar</span>
                                         </button>
                                     </div>
                                 </div>
