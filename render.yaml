@@ -6,12 +6,10 @@ databases:
 services:
   - type: web
     name: mascote-petshop
-    runtime: java
-    buildCommand: ./mvnw clean package -DskipTests
-    startCommand: java -Dspring.profiles.active=prod -Dserver.port=$PORT -jar target/mascote-petshop-1.0.0.jar
+    runtime: docker
     envVars:
-      - key: JAVA_VERSION
-        value: 21
+      - key: PORT
+        value: 8080
       - key: SPRING_PROFILES_ACTIVE
         value: prod
       - key: DATABASE_URL
