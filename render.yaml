@@ -1,0 +1,20 @@
+databases:
+  - name: mascote-petshop-db
+    databaseName: mascotepetshop
+    user: mascote
+
+services:
+  - type: web
+    name: mascote-petshop
+    runtime: java
+    buildCommand: ./mvnw clean package -DskipTests
+    startCommand: java -Dspring.profiles.active=prod -Dserver.port=$PORT -jar target/mascote-petshop-1.0.0.jar
+    envVars:
+      - key: JAVA_VERSION
+        value: 21
+      - key: SPRING_PROFILES_ACTIVE
+        value: prod
+      - key: DATABASE_URL
+        fromDatabase:
+          name: mascote-petshop-db
+          property: jdbcDatabaseUrl
